@@ -93,6 +93,13 @@ defmodule Mix.Tasks.Absinthe.Schema.Json do
         schema: schema,
         json_codec: json_codec
       }) do
+    if schema.__absinthe_schema_provider__() == Absinthe.Schema.PersistentTerm do
+      Absinthe.Phase.Schema.PopulatePersistentTerm.run(schema.__absinthe_blueprint__(),
+        prototype_schema: schema.__absinthe_prototype_schema__(),
+        schema: schema
+      )
+    end
+
     with {:ok, result} <- Absinthe.Schema.introspect(schema) do
       content = json_codec.encode!(result, pretty: pretty)
       {:ok, content}

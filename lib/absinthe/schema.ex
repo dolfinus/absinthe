@@ -140,6 +140,7 @@ defmodule Absinthe.Schema do
     end
   end
 
+  @deprecated "`Absinthe.Schema` process no longer needed, please remove it from your supervision tree."
   def child_spec(schema) do
     %{
       id: {__MODULE__, schema},
